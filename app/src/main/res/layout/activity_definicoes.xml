@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_definition"
+    tools:context=".Definicoes">
+
+  <ImageButton
+      android:id="@+id/bt_back"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="@string/todoa"
+      android:padding="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.943"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.955"
+      app:srcCompat="@drawable/bt_back"
+      tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+  <EditText
+      android:id="@+id/tempoDeclarado"
+      android:layout_width="237dp"
+      android:layout_height="75dp"
+      android:background="@android:drawable/alert_dark_frame"
+      android:ems="10"
+      android:fontFamily="@font/berkshire_swash"
+      android:hint="@string/digite_o_tempo_limite"
+      android:importantForAutofill="no"
+      android:inputType="number"
+      android:textAlignment="center"
+      android:textColor="#673AB7"
+      android:textColorHint="#673AB7"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.646"
+      tools:ignore="SpeakableTextPresentCheck" />
+
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/berkshire_swash"
+      android:text="@string/m_sica"
+      android:textAlignment="center"
+      android:textColor="#F8121111"
+      android:textSize="24sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.359" />
+
+  <TextView
+      android:id="@+id/textView5"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/berkshire_swash"
+      android:text="@string/tempo_limite"
+      android:textAlignment="center"
+      android:textColor="#040303"
+      android:textSize="24sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/textView"
+      app:layout_constraintVertical_bias="0.31" />
+
+  <Switch
+      android:id="@+id/switchMsc"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="msc_ON_OFF"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.4"
+      tools:ignore="TouchTargetSizeCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

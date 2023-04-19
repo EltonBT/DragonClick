@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="click">Click</string>
+    <string name="todo">TODO</string>
+    <string name="todoa">TODO</string>
+    <string name="contador">Contador</string>
+    <string name="temporizador">Temporizador</string>
+    <string name="_00_00">00:00</string>
+    <string name="btadd">+</string>
+    <string name="btsub">-</string>
+    <string name="digite_o_tempo_limite">Digite o tempo limite.</string>
+    <string name="volume">Volume</string>
+    <string name="volume3">Volume</string>
+    <string name="volume2">Volume</string>
+    <string name="tempo_limite">Tempo Limite</string>
+    <string name="m_sica">Música</string>
+    <string name="todooi">TODO</string>
+    <string name="todop">TODO</string>
+    <string name="todok">TODO</string>
+</resources>
