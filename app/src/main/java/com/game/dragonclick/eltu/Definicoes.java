@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import java.util.Scanner;
@@ -25,7 +26,8 @@ public class Definicoes extends AppCompatActivity {
     EditText tempoDeclarado;
     TextView musica,tempo_total;
     Switch switchMsc;
-    boolean msc_ON = true;
+
+    AudioPlay audioPlay = new AudioPlay();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,20 @@ public class Definicoes extends AppCompatActivity {
         switchMsc=findViewById(R.id.switchMsc);
 
         tempoDeclarado.setText(String.valueOf(getTimeConfig()));
+
+        switchMsc.setChecked(getMusicConfig());
+
+        switchMsc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setMusicConfig(isChecked);
+                if(isChecked){
+                    audioPlay.play(getApplicationContext());
+                }else{
+                    audioPlay.stop();
+                }
+            }
+        });
 
         tempoDeclarado.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,22 +84,6 @@ public class Definicoes extends AppCompatActivity {
             }
         });
     }
-    public void Msc_ON_OFF(View view){
-        MainActivity mscOn = new MainActivity();
-        mscOn.Msc_on();
-        if(!msc_ON) {
-            mediaPlayer.pause();
-            msc_ON = false;
-        }else{
-            mediaPlayer.start();
-            msc_ON = true;
-        }
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
 
     public void setTimeConfig(String time) {
         time = time.isEmpty() ? "0" : time;
@@ -98,5 +98,19 @@ public class Definicoes extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
                 Const.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         return sharedPref.getInt(Const.TIME_PREFS, 10);
+    }
+
+    public void setMusicConfig(boolean configMusic) {
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                Const.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(Const.MUSIC_PREFS, configMusic);
+        editor.apply();
+    }
+
+    public boolean getMusicConfig(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                Const.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(Const.MUSIC_PREFS, true);
     }
 }
