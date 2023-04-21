@@ -1,26 +1,35 @@
 package com.game.dragonclick.eltu;
 
-import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Scanner;
+import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.game.dragonclick.eltu.DTO.PlayerScore;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton bt_start, bt_definition, bt_about, bt_end;
-    MediaPlayer mediaPlayer;
+
+    private DatabaseReference mDatabase;
+    AudioPlay audioPlay = new AudioPlay();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Msc_on();
 
         bt_start = findViewById(R.id.bt_start);
         bt_definition = findViewById(R.id.bt_definition);
@@ -52,21 +61,59 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-        });Definicoes mscTest = new Definicoes();
-        mscTest.msc_ON=true;
-    }public void Msc_on() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.backsound);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(0.5f, 0.5f);
-        mediaPlayer.start();
+        });
+
+        if(getMusicConfig()){
+            audioPlay.play(getApplicationContext());
+        }
+
+        loadBestPlayer();
     }
+
     @Override
     protected void onDestroy () {
+        audioPlay.stop();
+
         super.onDestroy();
-        // Libera o MediaPlayer ao sair do aplicativo
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
+    }
+
+    @Override
+    protected void onResume() {
+        loadBestPlayer();
+
+        super.onResume();
+    }
+
+    public void loadBestPlayer(){
+        TextView textViewBestPlayer = findViewById(R.id.textViewBestPlayerName);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        try{
+            mDatabase.child("players").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("GAME_LOG", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("GAME_LOG", String.valueOf(task.getResult().getValue()));
+
+                        PlayerScore savedPlayerScore = task.getResult().getValue(PlayerScore.class);
+
+                        if(savedPlayerScore != null){
+                            textViewBestPlayer.setText(String.format("%s - %s", savedPlayerScore.name, savedPlayerScore.media));
+                        }
+                    }
+                }
+            });
         }
+        catch (Exception ignored){}
+    }
+
+    public boolean getMusicConfig(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                Const.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(Const.MUSIC_PREFS, true);
     }
 }
