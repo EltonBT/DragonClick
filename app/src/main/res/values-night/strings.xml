@@ -17,4 +17,5 @@
     <string name="todok">TODO</string>
     <string name="melhor_jogador">Melhor Jogador</string>
     <string name="nome_do_jogador">Nome do jogador</string>
+    <string name="media">Média:</string>
 </resources>

@@ -1,30 +1,22 @@
 package com.game.dragonclick.eltu;
 
-import static com.game.dragonclick.eltu.R.id.bt_back;
-import static com.game.dragonclick.eltu.R.id.tempoDeclarado;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import java.util.Scanner;
-
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Definicoes extends AppCompatActivity {
-    public MediaPlayer mediaPlayer;
     EditText tempoDeclarado;
     TextView musica,tempo_total;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch switchMsc;
 
     AudioPlay audioPlay = new AudioPlay();
@@ -33,11 +25,6 @@ public class Definicoes extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definicoes);
-
-        /*mediaPlayer = MediaPlayer.create(this, R.raw.backsound);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(0.5f, 0.5f);
-        mediaPlayer.start();*/
 
         tempoDeclarado = findViewById(R.id.tempoDeclarado);
         musica=findViewById(R.id.textView);
@@ -48,15 +35,12 @@ public class Definicoes extends AppCompatActivity {
 
         switchMsc.setChecked(getMusicConfig());
 
-        switchMsc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setMusicConfig(isChecked);
-                if(isChecked){
-                    audioPlay.play(getApplicationContext());
-                }else{
-                    audioPlay.stop();
-                }
+        switchMsc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setMusicConfig(isChecked);
+            if(isChecked){
+                audioPlay.play(getApplicationContext());
+            }else{
+                audioPlay.stop();
             }
         });
 
@@ -77,12 +61,7 @@ public class Definicoes extends AppCompatActivity {
 
         ImageButton bt_back = findViewById(R.id.bt_back);
 
-        bt_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        bt_back.setOnClickListener(v -> finish());
     }
 
     public void setTimeConfig(String time) {

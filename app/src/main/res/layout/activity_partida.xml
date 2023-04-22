@@ -4,29 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_playing"
+    android:background="@drawable/bg_playing1"
     tools:context=".Partida">
 
     <ImageButton
         android:id="@+id/bt_click"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="156dp"
+        android:layout_height="151dp"
+        android:alpha="0.8"
         android:background="@drawable/round_button_background"
         android:contentDescription="@string/app_name"
         android:onClick="addClick"
         android:src="@drawable/bt_click"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
+        app:layout_constraintVertical_bias="0.794"
         tools:ignore="RedundantDescriptionCheck" />
+
+    <TextView
+        android:id="@+id/contadorTextView"
+        android:layout_width="222dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="22dp"
+        android:alpha="0.7"
+        android:background="@drawable/click"
+        android:fontFamily="@font/berkshire_swash"
+        android:text="@string/contador"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#C6FFFFFF"
+        android:textSize="34sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
 
     <ImageButton
         android:id="@+id/bt_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.6"
         android:contentDescription="@string/todoa"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,30 +59,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977"
         app:srcCompat="@drawable/bt_back"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/contadorTextView"
-        android:layout_width="222dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="22dp"
-        android:background="@drawable/click"
-        android:fontFamily="@font/berkshire_swash"
-        android:text="@string/contador"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#C6FFFFFF"
-        android:textSize="34sp"
-        android:typeface="normal"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/temporizadorTextView"
@@ -72,6 +72,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#C6FFFFFF"
         android:textSize="34sp"
+        android:alpha="0.7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
