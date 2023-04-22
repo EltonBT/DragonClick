@@ -14,7 +14,8 @@
         android:layout_weight="1"
         android:ems="10"
         android:hint="@string/nome_do_jogador"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-        android:importantForAutofill="no" />
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
 </LinearLayout>

@@ -1,13 +1,8 @@
 package com.game.dragonclick.eltu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Scanner;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -19,15 +14,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.game.dragonclick.eltu.DTO.PlayerScore;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Partida extends AppCompatActivity {
-    Scanner leia = new Scanner(System.in);
     CountDownTimer timer;
     MediaPlayer mediaPlayer;
     public int i = 0;
@@ -45,25 +38,23 @@ public class Partida extends AppCompatActivity {
         tempoInicial = getTimeConfig();
 
         ImageButton bt_back = findViewById(R.id.bt_back);
-        bt_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        bt_back.setOnClickListener(view -> finish());
     }
+    @SuppressLint("SetTextI18n")
     public void addClick(View view){
         TextView temporizadorTextView = findViewById(R.id.temporizadorTextView);
         TextView contadorTextView = findViewById(R.id.contadorTextView);
         if(contadorBloqueado) return;
         if(!temporizadorIniciado){
-        timer = new CountDownTimer(tempoInicial*1000,1000) {
+        timer = new CountDownTimer(tempoInicial* 1000L,1000) {
 
+            @SuppressLint("DefaultLocale")
             @Override
             public void onTick(long millisUntilFinished) {
                 long secondsLeft = (int) (millisUntilFinished / 1000);
                 temporizadorTextView.setText(String.format("%02d:%02d",secondsLeft/60,secondsLeft%60));
             }
+            @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 temporizadorTextView.setText("00:00");
@@ -78,9 +69,10 @@ public class Partida extends AppCompatActivity {
         contadorTextView.setText("Contador:" + i);
     }
 
+    @SuppressLint("SetTextI18n")
     public void showDialog() {
         LinearLayout lnPlayer = (LinearLayout) View.inflate(this, R.layout.inflate_player_dialog, null);
-        EditText etPlayerName = (EditText) lnPlayer.findViewById(R.id.editTextPlayerName);
+        EditText etPlayerName = lnPlayer.findViewById(R.id.editTextPlayerName);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Partida.this);
         builder.setMessage("Adicione seu nome")
@@ -88,10 +80,8 @@ public class Partida extends AppCompatActivity {
                     String namePlayer = etPlayerName.getText().toString().isEmpty() ?
                             "Não identificado" : etPlayerName.getText().toString();
                     int score = i;
-                    Double media = ((double) i / tempoInicial);
-
                     int tempo = tempoInicial;
-
+                    Double media = ((double) i / tempoInicial);
                     saveToDB(new PlayerScore(namePlayer, score, media, tempo));
                 })
                 .setNegativeButton("Cancelar", (dialog, id) -> {
@@ -106,29 +96,25 @@ public class Partida extends AppCompatActivity {
     public void saveToDB(PlayerScore playerScore){
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("players").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("GAME_LOG", "Error getting data", task.getException());
+        mDatabase.child("players").child("1").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e("GAME_LOG", "Error getting data", task.getException());
 
-                    mDatabase.child("players").child("1").setValue(playerScore);
-                }
-                else {
-                    try{
-                        Log.d("GAME_LOG", String.valueOf(task.getResult().getValue()));
+                mDatabase.child("players").child("1").setValue(playerScore);
+            }
+            else {
+                try{
+                    Log.d("GAME_LOG", String.valueOf(task.getResult().getValue()));
 
-                        PlayerScore savedPlayerScore = task.getResult().getValue(PlayerScore.class);
-                        assert savedPlayerScore != null;
-                        Log.i("GAME_LOG", savedPlayerScore.name);
+                    PlayerScore savedPlayerScore = task.getResult().getValue(PlayerScore.class);
+                    assert savedPlayerScore != null;
+                    Log.i("GAME_LOG", savedPlayerScore.name);
 
-                        if(playerScore.media > savedPlayerScore.media){
-                            mDatabase.child("players").child("1").setValue(playerScore);
-                        }
-                    }catch (Exception e){
+                    if(playerScore.media > savedPlayerScore.media){
                         mDatabase.child("players").child("1").setValue(playerScore);
                     }
-
+                }catch (Exception e){
+                    mDatabase.child("players").child("1").setValue(playerScore);
                 }
             }
         });

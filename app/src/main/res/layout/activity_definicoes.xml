@@ -11,7 +11,8 @@
       android:id="@+id/bt_back"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:contentDescription="@string/todoa"
+      android:alpha="0.6"
+      android:contentDescription="@string/todo"
       android:padding="0dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +21,7 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.955"
       app:srcCompat="@drawable/bt_back"
-      tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+      tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,ImageContrastCheck" />
 
   <EditText
       android:id="@+id/tempoDeclarado"
@@ -86,6 +87,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.4"
-      tools:ignore="TouchTargetSizeCheck" />
+      tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
