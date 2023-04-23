@@ -39,11 +39,31 @@
         android:textSize="34sp"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/temporizadorTextView"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
+
+    <TextView
+        android:id="@+id/mediaClickTextView"
+        android:layout_width="222dp"
+        android:layout_height="39dp"
+        android:alpha="0.7"
+        android:background="@drawable/click"
+        android:fontFamily="@font/berkshire_swash"
+        android:text="@string/m_diaclick"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#C6FFFFFF"
+        android:textSize="34sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/temporizadorTextView"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contadorTextView"
+        app:layout_constraintVertical_bias="0.011" />
 
     <ImageButton
         android:id="@+id/bt_back"

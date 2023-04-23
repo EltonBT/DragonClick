@@ -27,6 +27,7 @@ public class Partida extends AppCompatActivity {
     public int tempoInicial = 10;
     boolean temporizadorIniciado = false;
     boolean contadorBloqueado = false;
+    boolean mediaClickOff = false;
 
     private DatabaseReference mDatabase;
 
@@ -44,7 +45,9 @@ public class Partida extends AppCompatActivity {
     public void addClick(View view){
         TextView temporizadorTextView = findViewById(R.id.temporizadorTextView);
         TextView contadorTextView = findViewById(R.id.contadorTextView);
+        TextView mediaClickTextView = findViewById(R.id.mediaClickTextView);
         if(contadorBloqueado) return;
+        if(mediaClickOff) return;
         if(!temporizadorIniciado){
         timer = new CountDownTimer(tempoInicial* 1000L,1000) {
 
@@ -53,19 +56,22 @@ public class Partida extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 long secondsLeft = (int) (millisUntilFinished / 1000);
                 temporizadorTextView.setText(String.format("%02d:%02d",secondsLeft/60,secondsLeft%60));
+
             }
             @SuppressLint("SetTextI18n")
             @Override
             public void onFinish() {
                 temporizadorTextView.setText("00:00");
-                contadorBloqueado = true;
 
+                contadorBloqueado = true;
+                mediaClickOff = true;
                 showDialog();
             }
         }.start();
         }
         temporizadorIniciado=true;
         i++;
+        mediaClickTextView.setText("Média:" + (double)i/tempoInicial);
         contadorTextView.setText("Contador:" + i);
     }
 
@@ -73,15 +79,16 @@ public class Partida extends AppCompatActivity {
     public void showDialog() {
         LinearLayout lnPlayer = (LinearLayout) View.inflate(this, R.layout.inflate_player_dialog, null);
         EditText etPlayerName = lnPlayer.findViewById(R.id.editTextPlayerName);
+        Double media = ((double) i / tempoInicial);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Partida.this);
-        builder.setMessage("Adicione seu nome")
+        builder.setMessage("Adicione seu nome"+ "\nMédia: "+media)
                 .setPositiveButton("Confirmar", (dialog, id) -> {
                     String namePlayer = etPlayerName.getText().toString().isEmpty() ?
                             "Não identificado" : etPlayerName.getText().toString();
                     int score = i;
                     int tempo = tempoInicial;
-                    Double media = ((double) i / tempoInicial);
+
                     saveToDB(new PlayerScore(namePlayer, score, media, tempo));
                 })
                 .setNegativeButton("Cancelar", (dialog, id) -> {

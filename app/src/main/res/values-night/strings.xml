@@ -18,4 +18,5 @@
     <string name="melhor_jogador">Melhor Jogador</string>
     <string name="nome_do_jogador">Nome do jogador</string>
     <string name="media">Média:</string>
+    <string name="m_diaclick">Média</string>
 </resources>
